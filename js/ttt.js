@@ -62,9 +62,21 @@ define('ttt', ['templates'], function(templates) {
             for (var i = 0; i < minmax.length; i++) {
                 if (typeof minmax[i] === null) {continue;}
 
-                if (minmax[i] > next_move) {
+                if (minmax[i] <= next_move) {
                     next_move = minmax[i];
                     index = i;
+                }
+            }
+
+            // Go the other way to find the best index to move to
+            if (!index) {
+                for (var i = 0; i < minmax.length; i++) {
+                    if (typeof minmax[i] === null) {continue;}
+
+                    if (minmax[i] >= next_move) {
+                        next_move = minmax[i];
+                        index = i;
+                    }
                 }
             }
 
