@@ -19,10 +19,12 @@ define('ttt', ['templates'], function(templates) {
             }
         },
 
+        /* Render the board */
         draw_board: function() {
             this.$board.html(_.template(templates.board, {board: this.board, templates: templates}));
         },
 
+        /* If there is a winner on the baord, show it */
         handle_possible_win: function() {
             var indexes = this.is_win(this.board);
 
@@ -32,27 +34,31 @@ define('ttt', ['templates'], function(templates) {
             this.win_callback(indexes);
         },
 
+        /* Record a move on the board */
         move: function(index, piece) {
             // Prevent invalid moves
             if (typeof this.board[index] !== 'undefined') {return;}
 
             this.board[index] = piece;
             this.draw_board();
+            this.handle_possible_win();
         },
 
+        /* Trigger a users move */
         user_move: function(index) {
             if (this.done) {return;}
 
             this.move(index, this.user_piece);
-            this.handle_possible_win();
             this.ai_move();
         },
 
+        /* Triggers an AI move */
         ai_move: function() {
             var minmax = this.find_best_move(this.board, true, 1),
                 next_move = -11,
                 index;
 
+            // Find the index at which a move should be made
             for (var i = 0; i < minmax.length; i++) {
                 if (typeof minmax[i] === null) {continue;}
 
@@ -63,15 +69,15 @@ define('ttt', ['templates'], function(templates) {
             }
 
             this.move(index, this.ai_piece);
-            this.handle_possible_win();
         },
 
-        // Figure out best move
+        /* Figures out the best move for the AI to make */
         find_best_move: function(temp_board, ais_move, depth) {
             var scores = new Array(9),
                 play_board,
                 minmax_return = !ais_move ? 11 : -11;
 
+            // If the current board has a win then return the appropriate score
             if (this.is_win(temp_board)) {
                 if (!ais_move) {
                     return depth + 10;
@@ -80,6 +86,7 @@ define('ttt', ['templates'], function(templates) {
                 }
             }
 
+            // Loop throught all empty spaces in board
             for (var i = 0; i < temp_board.length; i++) {
                 // Continue if this squared has a play
                 if (typeof temp_board[i] !== 'undefined') {continue;}
@@ -87,11 +94,14 @@ define('ttt', ['templates'], function(templates) {
                 play_board = temp_board.slice(0);
                 play_board[i] = ais_move ? this.ai_piece : this.user_piece;
 
+                // Record score for depth
                 scores[i] = this.find_best_move(play_board, !ais_move, depth + 1);
             }
 
+            // Return all socres if at depth one, the parent method will figure out what to do with them
             if (depth === 1) {return scores};
 
+            // Return the minmax acordinging to who's move it is
             for (var i = 0; i < scores.length; i++) {
                 if (typeof scores[i] === null) {continue;}
 
@@ -102,9 +112,11 @@ define('ttt', ['templates'], function(templates) {
                     minmax_return = scores[i];
                 }
             }
+
             return minmax_return;
         },
 
+        /* Checks to see if someone has won */
         is_win: function(board) {
             // Horizontal wins
             if (board[0] + board[1] + board[2] === 'xxx') {return [0,1,2];}
@@ -130,6 +142,7 @@ define('ttt', ['templates'], function(templates) {
         }
     };
 
+    /* Return public methods */
     return {
         init: ttt.init.bind(ttt),
         move: ttt.user_move.bind(ttt)

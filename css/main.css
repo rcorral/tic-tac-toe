@@ -56,6 +56,10 @@
     color: #999;
 }
 
+.player-picker div button:hover {
+  color: #333;
+}
+
 .player-picker div span {
     float: left;
     padding: 20px 10px 0;
