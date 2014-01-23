@@ -83,7 +83,10 @@
 }
 
 /* Remove cursor pointer from played squares */
-.board-wrapper li[data-value!=''] {
+.board-wrapper li[data-value='x'] {
+    cursor: inherit;
+}
+.board-wrapper li[data-value='o'] {
     cursor: inherit;
 }
 
@@ -109,6 +112,10 @@
 /* If it's an actual play we want to display it nice and bright */
 .board-wrapper li i {
     opacity: 1;
+}
+
+.board-wrapper li.winning i {
+    color: #F54D4A;
 }
 
 /* Remove left borders from left most elements */

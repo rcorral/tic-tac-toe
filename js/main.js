@@ -3,12 +3,18 @@ requirejs.config({
 });
 
 require(['templates', 'ttt'], function(templates, game) {
-    var $board = jQuery('.board-wrapper');
+    var $board = jQuery('.board-wrapper'),
+        callback = function(indexes) {
+            _.each(indexes, function(i) {
+                jQuery('[data-index='+i+']').addClass('winning');
+            });
+        };
 
     // Auto init game as the user playing first
     game.init({
         board: $board,
-        user_piece: 'o' // X always starts
+        user_piece: 'o',
+        callback: callback
     });
     $board.addClass('user-piece-o');
 
@@ -17,7 +23,8 @@ require(['templates', 'ttt'], function(templates, game) {
 
         game.init({
             board: $board,
-            user_piece: users_piece
+            user_piece: users_piece,
+            callback: callback
         });
         // Remove previous classes and add new one
         $board.removeClass('user-piece-x').removeClass('user-piece-o');
