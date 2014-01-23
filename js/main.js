@@ -8,9 +8,9 @@ require(['templates', 'ttt'], function(templates, game) {
     // Auto init game as the user playing first
     game.init({
         board: $board,
-        user_piece: 'x' // X always starts
+        user_piece: 'o' // X always starts
     });
-    $board.addClass('user-piece-x');
+    $board.addClass('user-piece-o');
 
     jQuery('[data-action~=restart]').on('click', function() {
         var users_piece = jQuery(this).data('begin-with') === 'ai' ? 'o' : 'x';
