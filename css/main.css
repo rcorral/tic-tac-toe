@@ -87,8 +87,8 @@
     cursor: inherit;
 }
 
-/* place holder for squares without plays */
-.board-wrapper li span {
+/* Play pieces placeholdres */
+.board-wrapper li i, .board-wrapper li span {
     width: 65px;
     margin: 0 auto;
     display: block;
@@ -105,6 +105,10 @@
 }
 .board-wrapper.user-piece-o li[data-value='']:hover span::before {
     content: "\f10c";
+}
+/* If it's an actual play we want to display it nice and bright */
+.board-wrapper li i {
+    opacity: 1;
 }
 
 /* Remove left borders from left most elements */

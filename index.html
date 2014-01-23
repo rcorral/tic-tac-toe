@@ -11,7 +11,7 @@
     <div class="banner">
         <p>
             <span><a href="https://github.com/rcorral/tic-tac-toe">Tic tac toe</a></span>
-            <span>&mdash; Try and beat it &mdash; Based on the MinMax algorithm &mdash;</span>
+            <span>&mdash; Try and beat it &mdash; Based on the Minmax algorithm &mdash;</span>
             <iframe src="http://ghbtns.com/github-btn.html?user=rcorral&repo=tic-tac-toe&type=fork&count=false&size=small" allowtransparency="true" frameborder="0" scrolling="0" width="53" height="20"></iframe>
             <iframe src="http://ghbtns.com/github-btn.html?user=rcorral&type=follow&count=false&size=small" allowtransparency="true" frameborder="0" scrolling="0" width="132" height="20"></iframe>
         </p>
@@ -32,9 +32,9 @@
         var players = ['x', 'o'];
         players[-1] = '';
 
-        // There are 9 squares in which plays can be made, draw them
+        // There are 9 squares in which board can be made, draw them
         for (var i = 0; i < 9; i++) { %>
-            <%= _.template(templates.square, {index: i, play: players[players.indexOf(plays[i])]}) %>
+            <%= _.template(templates.square, {index: i, play: players[players.indexOf(board[i])]}) %>
         <% }; %>
         </ul>
     </script>

@@ -8,7 +8,7 @@ require(['templates', 'ttt'], function(templates, game) {
     // Auto init game as the user playing first
     game.init({
         board: $board,
-        owns_piece: 'x' // X always starts
+        user_piece: 'x' // X always starts
     });
     $board.addClass('user-piece-x');
 
@@ -17,7 +17,7 @@ require(['templates', 'ttt'], function(templates, game) {
 
         game.init({
             board: $board,
-            owns_piece: users_piece
+            user_piece: users_piece
         });
         // Remove previous classes and add new one
         $board.removeClass('user-piece-x').removeClass('user-piece-o');
