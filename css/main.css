@@ -1,0 +1,117 @@
+.banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #555;
+  color: #ccc;
+}
+
+.banner p {
+  position: relative;
+  margin: 5px 0;
+  padding-right: 205px;
+  text-align: center;
+}
+
+.banner p a {
+  color: #ccc;
+}
+
+.banner p iframe {
+  position: absolute;
+  margin-left: 10px;
+}
+
+.banner p iframe + iframe {
+  position: absolute;
+  margin-left: 70px;
+}
+
+.player-picker, .board-wrapper {
+    width: 495px;
+    margin: 0 auto;
+    clear: both;
+}
+
+.player-picker {
+    margin-top: 50px;
+}
+
+.board-wrapper {
+    padding-top: 50px
+}
+
+.player-picker div {
+    width: 310px;
+    margin: 0 auto;
+}
+
+.player-picker div button {
+    border: 0;
+    background: 0;
+    float: left;
+    padding: 0;
+    cursor: pointer;
+    color: #999;
+}
+
+.player-picker div span {
+    float: left;
+    padding: 20px 10px 0;
+}
+
+.player-picker div button + button {
+    float: right;
+}
+
+.board-wrapper ul {
+    padding: 0;
+    margin: 0;
+}
+
+.board-wrapper li {
+    width: 160px;
+    height: 160px;
+    float: left;
+    border: 5px solid #000;
+    border-color: #000;
+    border-width: 5px;
+    border-style: none none solid solid;
+    list-style: none; padding: 0; margin: 0;
+    cursor: pointer;
+}
+
+/* Remove cursor pointer from played squares */
+.board-wrapper li[data-value!=''] {
+    cursor: inherit;
+}
+
+/* place holder for squares without plays */
+.board-wrapper li span {
+    width: 65px;
+    margin: 0 auto;
+    display: block;
+    height: 88px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: FontAwesome;
+    font-size: 86px;
+    opacity: 0.7;
+}
+.board-wrapper.user-piece-x li[data-value='']:hover span::before {
+    content: "\f00d";
+}
+.board-wrapper.user-piece-o li[data-value='']:hover span::before {
+    content: "\f10c";
+}
+
+/* Remove left borders from left most elements */
+.board-wrapper li:nth-child(3n-2) {
+    border-left-style: none;
+}
+/* Remove right borders from right most elements */
+.board-wrapper li:nth-child(1n+7) {
+    border-bottom-style: none;
+}
