@@ -69,9 +69,12 @@ define('ttt', ['templates'], function(templates) {
                 index,
                 flat_board = JSON.stringify(this.board);
 
-            // Check if the first move always play in the center first
+            // If first move isn't in the center take the center
             if (this.move_count === 1) {
-                return this.move(4, 'ai');
+                if (flat_board !== '[null,null,null,null,"x",null,null,null,null]') {
+                    // Make move on center of board
+                    return this.move(4, 'ai');
+                }
             }
 
             // Find the index at which a move should be made
