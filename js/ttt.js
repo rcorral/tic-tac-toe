@@ -76,6 +76,10 @@ define('ttt', ['templates'], function(templates) {
                     return this.move(4, 'ai');
                 }
             }
+            // There is one way to win, so this is what I can come up with to avoid that
+            if (flat_board === '["o",null,null,null,"x",null,null,null,"x"]') {
+                return this.move(2, 'ai');
+            }
 
             // Find the index at which a move should be made
             for (var i = 0; i < minmax.length; i++) {
