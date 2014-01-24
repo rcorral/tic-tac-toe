@@ -85,6 +85,13 @@ define('ttt', ['templates'], function(templates) {
                     next_move = minmax[i];
                     index = i;
                 }
+
+                // 12 is always a magic number, it means immediate win! :)
+                if (minmax[i] === 12) {
+                    next_move = minmax[i];
+                    index = i;
+                    break;
+                };
             }
 
             // Go the other way to find the best index to move to
