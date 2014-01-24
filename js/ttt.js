@@ -4,18 +4,19 @@ define('ttt', ['templates'], function(templates) {
         init: function(opts) {
             var smart_first_moves = [0, 2, 4, 6, 8];
 
-            this.win_callback = opts.callback;
+            this.callback = opts.callback;
             this.$board = opts.board;
             this.board = new Array(9);
             this.draw_board();
             this.user_piece = opts.user_piece
             this.ai_piece = opts.user_piece === 'x' ? 'o' : 'x';
+            this.move_count = 0;
             this.done = false;
 
             // x always goes first, so check if we need to go first
             if (this.ai_piece === 'x') {
                 // Pick a random index of the suggested "smart" moves
-                this.move(smart_first_moves[Math.floor(Math.random() * smart_first_moves.length)], this.ai_piece);
+                this.move(smart_first_moves[Math.floor(Math.random() * smart_first_moves.length)], 'ai');
             }
         },
 
@@ -25,38 +26,53 @@ define('ttt', ['templates'], function(templates) {
         },
 
         /* If there is a winner on the baord, show it */
-        handle_possible_win: function() {
+        end_game_check: function(mover) {
             var indexes = this.is_win(this.board);
 
-            if (!indexes) {return;}
+            // Check for a draw
+            if (this.move_count === 9 && !indexes) {
+                this.done = true;
+                return this.callback([], 'draw');
+            } else if (!indexes) {return;}
 
             this.done = true;
-            this.win_callback(indexes);
+            this.callback(indexes, mover);
         },
 
         /* Record a move on the board */
-        move: function(index, piece) {
+        move: function(index, mover) {
             // Prevent invalid moves
             if (typeof this.board[index] !== 'undefined') {return;}
 
-            this.board[index] = piece;
+            this.board[index] = this[mover + '_piece'];
             this.draw_board();
-            this.handle_possible_win();
+            this.move_count++;
+            this.end_game_check(mover);
         },
 
         /* Trigger a users move */
         user_move: function(index) {
             if (this.done) {return;}
 
-            this.move(index, this.user_piece);
-            this.ai_move();
+            this.move(index, 'user');
+
+            // Make AI move if the game isn't over
+            if (!this.done) {
+                this.ai_move();
+            }
         },
 
         /* Triggers an AI move */
         ai_move: function() {
             var minmax = this.find_best_move(this.board, true, 1),
                 next_move = -11,
-                index;
+                index,
+                flat_board = JSON.stringify(this.board);
+
+            // Check if the first move always play in the center first
+            if (this.move_count === 1) {
+                return this.move(4, 'ai');
+            }
 
             // Find the index at which a move should be made
             for (var i = 0; i < minmax.length; i++) {
@@ -73,14 +89,14 @@ define('ttt', ['templates'], function(templates) {
                 for (var i = 0; i < minmax.length; i++) {
                     if (typeof minmax[i] === null) {continue;}
 
-                    if (minmax[i] >= next_move) {
+                    if (minmax[i] > next_move) {
                         next_move = minmax[i];
                         index = i;
                     }
                 }
             }
 
-            this.move(index, this.ai_piece);
+            this.move(index, 'ai');
         },
 
         /* Figures out the best move for the AI to make */
@@ -147,8 +163,8 @@ define('ttt', ['templates'], function(templates) {
             // Diag
             if (board[0] + board[4] + board[8] === 'xxx') {return [0,4,8];}
             if (board[0] + board[4] + board[8] === 'ooo') {return [0,4,8];}
-            if (board[2] + board[4] + board[6] === 'xxx') {return [2,4,8];}
-            if (board[2] + board[4] + board[6] === 'ooo') {return [2,4,8];}
+            if (board[2] + board[4] + board[6] === 'xxx') {return [2,4,6];}
+            if (board[2] + board[4] + board[6] === 'ooo') {return [2,4,6];}
 
             return false;
         }

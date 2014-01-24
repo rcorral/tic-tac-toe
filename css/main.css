@@ -1,3 +1,6 @@
+/**********
+ * Banner *
+ **********/
 .banner {
   position: absolute;
   top: 0;
@@ -28,6 +31,10 @@
   margin-left: 70px;
 }
 
+/*****************
+ * Player Picker *
+ *****************/
+
 .player-picker, .board-wrapper {
     width: 495px;
     margin: 0 auto;
@@ -36,10 +43,6 @@
 
 .player-picker {
     margin-top: 50px;
-}
-
-.board-wrapper {
-    padding-top: 50px
 }
 
 .player-picker div {
@@ -67,6 +70,24 @@
 
 .player-picker div button + button {
     float: right;
+}
+
+/*********
+ * Board *
+ *********/
+
+.board-wrapper {
+    padding-top: 25px;
+    position: relative;
+}
+
+.board-wrapper .board-message {
+  font-size:24px;
+  text-align: center;
+  height: 24px;
+  display:block;
+  margin-bottom: 25px;
+  color: #F54D4A;
 }
 
 .board-wrapper ul {
