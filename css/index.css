@@ -108,10 +108,10 @@
 }
 
 /* Remove cursor pointer from played squares */
-.board-wrapper li[data-value='x'] {
+.board-wrapper li.play-x {
     cursor: inherit;
 }
-.board-wrapper li[data-value='o'] {
+.board-wrapper li.play-y {
     cursor: inherit;
 }
 
@@ -129,10 +129,10 @@
     font-size: 86px;
     opacity: 0.7;
 }
-.board-wrapper.user-piece-x li[data-value='']:hover span::before {
+.board-wrapper.user-piece-x li.play-empty:hover span::before {
     content: "\f00d";
 }
-.board-wrapper.user-piece-o li[data-value='']:hover span::before {
+.board-wrapper.user-piece-o li.play-empty:hover span::before {
     content: "\f10c";
 }
 /* If it's an actual play we want to display it nice and bright */
